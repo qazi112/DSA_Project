@@ -1,51 +1,93 @@
+/*
+ * Project Name : "Movie Search Engine".
+ * Course : Data Structure And Algorithm.
+ * Module Instructor : Dr Malik Jahan Khan.
+ * Lab Engineer : Jaleel Sb
+ * Semester Project
+ * Developed In Year 2019.
+ * Team Project.
+ * Developed By :
+     *************************
+ *   1. Qazi Arsalan Shah (BSCS Year 2nd)
+ *   2. Abdullah Tahir    (BSCS Year 2nd)
+ *   3. Mahmood Yousaf    (BSCS Year 2nd)
+     *************************
+     "Namal Institute Mianwali"
+     *************************
+ * This program is written using CodeBlocks IDE
+ * Programing language Used : C++
+ * Data Structure Used : Linked List
+ * Hashing Used for saving the data in data structure
+ * Team Project using GitHub
+ * GitHub Repository Link : https://github.com/qazi112/DSA_Project
+ */
+
+/*
+
+   * Header Files *
+
+*/
 #include <iostream>
 #include <fstream>
 #define TABLE_SIZE 200
+
+
 using namespace std;
-//-----------------------//
-//Node Class : MOVIE
+/**
+    ** Node Class : "Movie Class" **
+    ** Each Node Object will be a single movie having three attributes **
+    ** movie id , average Rating and number of votes **
+**/
+
 class Node
 {
 private:
-    string id;
-    float averagerate;
-    double votes;
-    float weightedRank; // Calculated By Formula
-    Node *next;
+    string id;                      /** Movie Unique Id **/
+    float averagerate;              /** Average Rating **/
+    int votes;                      /** Votes **/
+    Node *next;                     /** Address Of Next Node **/
 public:
-    Node();
-    Node(string name,float rate,double vote,float wr);
-    void setData(string d,float rate,double vote,float weightR);
-    void setPodoubleer(Node *n);
+
+    Node();                         /** Node Class Default Constructor **/
+
+    Node(string name,float rate,int vote); /** Node Class Parameterized **/
+
+/*
+    * Getters Setters
+*/
+    void setData(string d,float rate,int vote);
+    void setnext(Node *n);
     string getId();
     float getAverageRate();
-    double getVote();
-    Node* getPodoubleer();
-    float getWeightedRank();
-    void setWeightedRank(float wr);
+    int getVote();
+    Node* getnext();
 };
+/*
+
+    * Definition of Node Class
+*/
+
 Node::Node()
 {
     averagerate=0;
     votes=0;
     next=NULL;
 }
-Node::Node(string name,float rate,double vote,float wr)
+Node::Node(string name,float rate,int vote)
 {
     id=name;
     averagerate=rate;
     votes=vote;
-    weightedRank=wr;
     next=NULL;
 }
-void Node:: setData(string d,float rate,double vote,float weightR)
+void Node:: setData(string d,float rate,int vote)
 {
     id=d;
     averagerate=rate;
     votes=vote;
-    weightedRank=weightR;
+
 }
-void Node:: setPodoubleer( Node *n)
+void Node:: setnext( Node *n)
 {
       next=n;
 }
@@ -57,24 +99,21 @@ float Node::getAverageRate()
 {
     return averagerate;
 }
-double Node::getVote()
+int Node::getVote()
 {
     return votes;
 }
-Node* Node:: getPodoubleer()
+Node* Node:: getnext()
 {   return next;
 }
-float Node::getWeightedRank()
-{
-    return weightedRank;
-}
-void Node::setWeightedRank(float wr)
-{
-    weightedRank=wr;
-}
+
+/**
+    ** LinkedList Class : "Movies Chain" **
+    ** Each Object will be Holding Movies list **
+**/
 
 
-//Linked List : Movies
+
 class LinkedList
 {
 private:
@@ -83,41 +122,36 @@ public:
     LinkedList();
     void setFirst(Node *first);
     Node* getFirst();
-    void add(string id,double vote,float avgRate,float wr);
-    void addAtStart(string id,double vote,float avgRate,float wr);
-    void removeFromStart();
-    void removeFromEnd();
+    void add(string id,int vote,float avgRate);
+    void addAtStart(string id,int vote,float avgRate);
     void display();
-    void removeAt(double index);
-    double getSize();
-    double findFunction(double value);
-    double getAt(double index);
-    void removeValue(double d);
-    void sortedAddition(string id,double vote,float avgRate,float wr);
+    int getSize();
 };
 
 
 
 
-
+/**
+        * Implementation of Linked Class *
+**/
 
 LinkedList::LinkedList()
 {
     first=NULL;
 }
-// implementation of Linked Class
+
 void LinkedList:: setFirst(Node *first)
 {   this->first=first;
 }
 Node* LinkedList:: getFirst()
 {   return first;
 }
-//void add(string id,double vote,float avgRate);
 
-  //  Node::Node(string name,float rate,double vote)
-
-void LinkedList::add(string id,double vote,float avgRate,float wr)
-{   Node *temp=new Node(id,avgRate,vote,2.6);
+/**
+    * Adds the value at end in linked list *
+**/
+void LinkedList::add(string id,int vote,float avgRate)
+{   Node *temp=new Node(id,avgRate,vote);
     if(first == NULL)
     {
            first=temp;
@@ -126,57 +160,31 @@ void LinkedList::add(string id,double vote,float avgRate,float wr)
     {
 
         Node *second=first;
-        while(second->getPodoubleer()!=NULL)
+        while(second->getnext()!=NULL)
         {
-              second=second->getPodoubleer();
+              second=second->getnext();
         }
-        second->setPodoubleer(temp);
+        second->setnext(temp);
     }
 }
-/*
-//----------------------------------------------------//
-    addAtStart = Add value at start
+/**
+    * AddAtStart_Function : Adds value at start of linked list *
+    * Takes Three parameters Id"string", Votes"Integer" , AverageRate"Float" *
+**/
 
-//----------------------------------------------------//
-*/
-
-void LinkedList::addAtStart(string id,double vote,float avgRate,float wr)
-{   Node *temp=new Node(id,avgRate,vote,2.6);
+void LinkedList::addAtStart(string id,int vote,float avgRate)
+{   Node *temp=new Node(id,avgRate,vote);
     Node *second=first;
     first=temp;
-    temp->setPodoubleer(second);
+    temp->setnext(second);
 }
-//----------------------------------------------------//
-//----------------------------------------------------//
 
-
-void LinkedList::removeFromStart()
-{
-    first=first->getPodoubleer();
-}
-void LinkedList::removeFromEnd()
-{   Node *temp=first;
-    if(first==NULL)
-    {
-        return;
-    }
-    else if(temp->getPodoubleer()==NULL)
-    {
-        first=NULL;
-    }
-    else
-    {
-
-    while(temp->getPodoubleer()->getPodoubleer()!=NULL)
-    {
-           temp=temp->getPodoubleer();
-    }
-    temp->setPodoubleer(NULL);
-    }
-}
+/**
+    * Display_Function : Displays Entries of linked list *
+**/
 void  LinkedList::display()
 {   Node *temp=first;
-    double counter=0;
+    int counter=0;
     if(first==NULL)
     {
         cout<<"Empty List\n";
@@ -187,43 +195,16 @@ void  LinkedList::display()
         {   cout<<temp->getId()<<"\t";
             cout<<temp->getAverageRate()<<"\t";
             cout<<temp->getVote()<<endl;
-            temp=temp->getPodoubleer();
+            temp=temp->getnext();
             counter++;
 
         }
-        cout<<counter<<endl;
+        cout<<endl;
+        cout<<"Number of Movies : "<<counter<<endl;
     }
 }
-void LinkedList:: removeAt(double index)
-{   if(index>=getSize())
-    {
-        cout<<"Index Exceeds\n";
-    }
-    else
-    {   Node *second=first;
-        for(double i=0;second->getPodoubleer()!=NULL; i++)
-        {
 
-            if(index==0)
-            {   removeFromStart();
-                break;
-            }
-            else if(i==index-1)
-            {   second->setPodoubleer(second->getPodoubleer()->getPodoubleer());
-                break;
-            }
-            else
-            {
-                second=second->getPodoubleer();
-            }
-        }
-    }
-
-
-}
-
-
-double LinkedList::getSize()
+int LinkedList::getSize()
 {
     if(first==NULL)
     {
@@ -231,11 +212,11 @@ double LinkedList::getSize()
         return 0;
     }
 else{
-     double i=0;            // counter
+     int i=0;            // counter
     Node *temp=first;
     for( i=0; temp!=NULL; i++)
     {
-         temp=temp->getPodoubleer();
+         temp=temp->getnext();
     }
     return i;
     }       // Length of List
@@ -248,11 +229,16 @@ else{
 
 
 
+/**
+    " Hashing_IMDB Class "
+    Having all the functionality for hashing the data
+    IMDB formula is used
+**/
 
-//-------------------------//
 class Hashing_IMDB
 {
 public:
+    LinkedList table[TABLE_SIZE];
     Hashing()
     {
         for(int i=0;i<200;i++)
@@ -260,58 +246,66 @@ public:
             table[i].setFirst(NULL);
         }
     }
-    void display();
-    LinkedList table[TABLE_SIZE];
-    double hashA(float wr);
-    void insert(double votes,string id, float avRate);
+    void getsTop_260_movies();
+    void readDataFromFile();
+    void display(); /// Uses Display function Of linked List
+    int hashA(float wr);    /// Hashes On The Basis of IMDB Formula
+    void insert(int votes,string id, float avRate); /// Insert Data
 };
-double Hashing_IMDB::hashA(float wr)
+
+void Hashing_IMDB::getsTop_260_movies()
+{
+    for(int a=89;a<99;a++)
+    {
+        table[a].display();
+        cout<<endl;
+    }
+}
+
+int Hashing_IMDB::hashA(float wr)
 {
     return wr*10;
+
 }
-void Hashing_IMDB::insert(double votes,string id, float avRate)
+void Hashing_IMDB::insert(int votes,string id, float avRate)
 {
-   // Formula IMDB
     float R=avRate;
     float v=votes;
-    float m=1500;
+    float m=1500;   /// Bench mark for movies to be in top Ranks
     float c=6.9;
    float WR=(v/(v+m))*R+(m/(v+m))*c;
 
-    //  Formula
-    int index=hashA(WR);
-    table[index].addAtStart(id,votes,avRate,2.7);
+    ///  Formula
+    int index=hashA(WR);    /// Generating Indexes on basis of Weighted Rank
+    table[index].addAtStart(id,votes,avRate);
 
 }
 void Hashing_IMDB::display()
 {
     cout<<"Displaying Most Popular Movies \n";
-    for(int i=90;i<101;i++)
+    for(int i=88;i<90;i++)
     {
         if(table[i].getFirst()!=NULL)
         {
             cout<<i <<" "<<"->>>";
             table[i].display();
             cout<<endl;
-            cout<<"\n\n\n\n\n\n\n\n\n\n\n\n";
+
         }
 
     }
 }
-
-
-int main()
+void Hashing_IMDB :: readDataFromFile()
 {
-    Hashing_IMDB a;
-    double vote;
+    int vote;
     float avRate;
     string id;
     fstream file;
     file.open("data.txt");
     if(!file)
     {
-        cout<<"Not";
-        return 0;
+        cout<<"File opening Error"<<endl;
+        return;
     }
     file>>id;
     file>>id;
@@ -321,11 +315,47 @@ int main()
         file>>id;
         file>>avRate;
         file>>vote;
-        a.insert(vote,id,avRate);
+        insert(vote,id,avRate);
 
     }
+}
 
-    a.display();
+int main()
+{
+    Hashing_IMDB h_Obj;
+    char choice;
+    char ch;
+    do{
+        cout<<"\tAccording To IMDB Formula\n";
+        cout<<"\t Select From Below Options \n\n";
+        cout<<"\t Press \"A\" for inserting data \n";
+        cout<<"\t Press \"B\" for Displaying Top 250 Movies \n";
+        cout<<"\t Press \"C\" Display All Movies\n";
+        cin>>choice;
+        switch(choice)
+        {
+        case 'A':
+
+           {
+                h_Obj.readDataFromFile();
+                break;
+           }
+        case 'B':
+            {
+                h_Obj.getsTop_260_movies();
+                break;
+            }
+        case 'C':
+            {
+                h_Obj.display();
+                break;
+            }
+        }
+        cout<<"Press \"Y\" To Continue"<<endl;
+        cin>>ch;
+    }while(ch=='Y' || ch=='y');
+
+
     return 0;
 
 }
