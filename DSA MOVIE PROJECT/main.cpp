@@ -239,9 +239,9 @@ class Hashing_IMDB
 {
 public:
     LinkedList table[TABLE_SIZE];
-    Hashing()
-    {
-        for(int i=0;i<200;i++)
+    Hashing_IMDB(){
+        int i;
+        for(i=0;i<200;i++)
         {
             table[i].setFirst(NULL);
         }
