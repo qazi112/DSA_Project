@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1577720733 source:c:\users\marhaba\desktop\dsa_project_final_3rd_semester\main.cpp
+	<iostream>
+	<fstream>
+
+1577737945 source:c:\users\marhaba\desktop\dsa_project\separate chaining\main.cpp
+	<iostream>
+	<fstream>
+
