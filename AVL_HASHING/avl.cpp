@@ -269,7 +269,10 @@ int AVL:: search(NODE* node,int vot)
 }
 int AVL::minvalue(NODE* node)
 {
-
+if(root==NULL)
+{
+    return 0;
+}
 
     while(node->getleft()!=NULL)
 

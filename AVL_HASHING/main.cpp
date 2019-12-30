@@ -13,48 +13,24 @@ public:
   public:
 
 
-  void disp();
-  void adder_linear(int d, float rat, string id);
-  int hashf(int d);
-  void serarch(int d);
-  void add();
+
+  void adder(int d, float rat, string id);
+  int hash_function(int d);
+  void File_handling();
   void smallest();
   void largest();
-  void custom_disp(float rat);
+  void custom_rate_disp(float rat);
 
-
-  void status();
 };
 
-void Hash::status() {
-  int i = 0;
-  for (int a = 0; a < 100; a++) {
-    if (array1[a].getroot() == NULL) {
-      i++;
-    }
-  }
-  if (i == 100) {
-    cout << "empty" << endl;
-  }
-  if (i == 0) {
-    cout << "full" << endl;
-  } else {
-    cout << "not full" << endl;
-  }
 
-}
 
-void Hash::serarch(int d) {
 
-  array1[hashf(d * 10)].search(array1[hashf(d * 10)].getroot(), d);
-
-}
-
-int Hash::hashf(int d) {
+int Hash::hash_function(int d) {
   return d%150;
 }
 
-void Hash::custom_disp(float rat) {
+void Hash::custom_rate_disp(float rat) {
     int a=rat*10;
     cout << "================================" << endl;
     cout << "Hash Table Index: " << a << endl;
@@ -92,7 +68,6 @@ void Hash::largest()
             break;
 
         }
-
         a--;
     }
 }
@@ -101,17 +76,17 @@ void Hash::largest()
 
 
 
-void Hash::adder_linear(int d, float rat, string id) {
+void Hash::adder(int d, float rat, string id) {
 
   float b=rat*10;
-  int a=hashf(b);
+  int a=hash_function(b);
 
   array1[a].add(d, rat, id);
 
 
 }
 
-void Hash::add() {
+void Hash::File_handling() {
   ifstream thefile("data.txt");
 
   int vote;
@@ -120,7 +95,7 @@ void Hash::add() {
   cout << "Adding Data, Please take cup of tea" << endl;
 
   while (thefile >> id >> rate >> vote) {
-    adder_linear(vote, rate, id);
+    adder(vote, rate, id);
 
   }
 
@@ -131,7 +106,7 @@ void Hash::add() {
 void template1()
 {
 Hash obj;
-obj.add();
+obj.File_handling();
 float b;
 char a,x;
     cout << "================================" << endl;
@@ -156,7 +131,7 @@ do{
         case 'C':
         cout <<"Enter Data" << endl;
         cin>> b;
-        obj.custom_disp(b);
+        obj.custom_rate_disp(b);
         break;
 
         default:
